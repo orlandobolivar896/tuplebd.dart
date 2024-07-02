@@ -2,8 +2,12 @@
 // file for details. All rights reserved. Use of this source code is governed
 // by a BSD-style license that can be found in the LICENSE file.
 
+import 'dart:async';
+
+import 'package:hive_test/hive_test.dart';
 import 'package:test/test.dart';
-import 'package:tuple/tuple.dart';
+import 'package:tuplebd/bd/bd.dart';
+import 'package:tuplebd/tuple.dart';
 
 void main() {
   group(Tuple2, () {
@@ -24,13 +28,17 @@ void main() {
       });
 
       test('throws when items has three values', () {
-        expect(() => Tuple2<int, String>.fromList([1, 'a', 3]),
-            throwsArgumentError);
+        expect(
+          () => Tuple2<int, String>.fromList([1, 'a', 3]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when first value is not an int', () {
         expect(
-            () => Tuple2<int, String>.fromList(['a', 'b']), throwsA(anything));
+          () => Tuple2<int, String>.fromList(['a', 'b']),
+          throwsA(anything),
+        );
       });
 
       test('throws when second value is not a string', () {
@@ -55,7 +63,9 @@ void main() {
 
       test('returns growable list when told so', () {
         expect(
-            t.toList(growable: true)..add('b'), orderedEquals([1, 'a', 'b']));
+          t.toList(growable: true)..add('b'),
+          orderedEquals([1, 'a', 'b']),
+        );
       });
     });
 
@@ -102,37 +112,51 @@ void main() {
     group('\'s fromList', () {
       test('throws when items is empty', () {
         expect(
-            () => Tuple3<int, String, int>.fromList([]), throwsArgumentError);
+          () => Tuple3<int, String, int>.fromList([]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has one value', () {
         expect(
-            () => Tuple3<int, String, int>.fromList([1]), throwsArgumentError);
+          () => Tuple3<int, String, int>.fromList([1]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has two values', () {
-        expect(() => Tuple3<int, String, int>.fromList([1, 'a']),
-            throwsArgumentError);
+        expect(
+          () => Tuple3<int, String, int>.fromList([1, 'a']),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has four values', () {
-        expect(() => Tuple3<int, String, int>.fromList([1, 'a', 2, 3]),
-            throwsArgumentError);
+        expect(
+          () => Tuple3<int, String, int>.fromList([1, 'a', 2, 3]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when first value is not an int', () {
-        expect(() => Tuple3<int, String, int>.fromList(['', 'a', 10]),
-            throwsA(anything));
+        expect(
+          () => Tuple3<int, String, int>.fromList(['', 'a', 10]),
+          throwsA(anything),
+        );
       });
 
       test('throws when second value is not a string', () {
-        expect(() => Tuple3<int, String, int>.fromList([1, 2, 10]),
-            throwsA(anything));
+        expect(
+          () => Tuple3<int, String, int>.fromList([1, 2, 10]),
+          throwsA(anything),
+        );
       });
 
       test('throws when third value is not an int', () {
-        expect(() => Tuple3<int, String, int>.fromList([1, 'a', 'b']),
-            throwsA(anything));
+        expect(
+          () => Tuple3<int, String, int>.fromList([1, 'a', 'b']),
+          throwsA(anything),
+        );
       });
     });
 
@@ -156,8 +180,10 @@ void main() {
       });
 
       test('returns growable list when told so', () {
-        expect(t.toList(growable: true)..add('b'),
-            orderedEquals([1, 'a', 10, 'b']));
+        expect(
+          t.toList(growable: true)..add('b'),
+          orderedEquals([1, 'a', 10, 'b']),
+        );
       });
     });
 
@@ -204,52 +230,66 @@ void main() {
 
     group('\'s fromList', () {
       test('throws when items is empty', () {
-        expect(() => Tuple4<int, String, int, String>.fromList([]),
-            throwsArgumentError);
+        expect(
+          () => Tuple4<int, String, int, String>.fromList([]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has one value', () {
-        expect(() => Tuple4<int, String, int, String>.fromList([1]),
-            throwsArgumentError);
+        expect(
+          () => Tuple4<int, String, int, String>.fromList([1]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has two values', () {
-        expect(() => Tuple4<int, String, int, String>.fromList([1, 'a']),
-            throwsArgumentError);
+        expect(
+          () => Tuple4<int, String, int, String>.fromList([1, 'a']),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has three values', () {
-        expect(() => Tuple4<int, String, int, String>.fromList([1, 'a', 2]),
-            throwsArgumentError);
+        expect(
+          () => Tuple4<int, String, int, String>.fromList([1, 'a', 2]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has five values', () {
         expect(
-            () =>
-                Tuple4<int, String, int, String>.fromList([1, 'a', 2, 'b', 3]),
-            throwsArgumentError);
+          () => Tuple4<int, String, int, String>.fromList([1, 'a', 2, 'b', 3]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when first value is not an int', () {
         expect(
-            () => Tuple4<int, String, int, String>.fromList(['', 'a', 2, 'b']),
-            throwsA(anything));
+          () => Tuple4<int, String, int, String>.fromList(['', 'a', 2, 'b']),
+          throwsA(anything),
+        );
       });
 
       test('throws when second value is not a string', () {
-        expect(() => Tuple4<int, String, int, String>.fromList([1, 2, 3, 'b']),
-            throwsA(anything));
+        expect(
+          () => Tuple4<int, String, int, String>.fromList([1, 2, 3, 'b']),
+          throwsA(anything),
+        );
       });
 
       test('throws when third value is not an int', () {
         expect(
-            () => Tuple4<int, String, int, String>.fromList([1, 'a', 'b', 2]),
-            throwsA(anything));
+          () => Tuple4<int, String, int, String>.fromList([1, 'a', 'b', 2]),
+          throwsA(anything),
+        );
       });
 
       test('throws when fourth value is not a string', () {
-        expect(() => Tuple4<int, String, int, String>.fromList([1, 'a', 2, 3]),
-            throwsA(anything));
+        expect(
+          () => Tuple4<int, String, int, String>.fromList([1, 'a', 2, 3]),
+          throwsA(anything),
+        );
       });
     });
 
@@ -259,17 +299,23 @@ void main() {
 
     test('returns correct tuple from withItem2', () {
       expect(
-          t.withItem2('b'), Tuple4<int, String, int, String>(1, 'b', 10, 'b'));
+        t.withItem2('b'),
+        Tuple4<int, String, int, String>(1, 'b', 10, 'b'),
+      );
     });
 
     test('returns correct tuple from withItem3', () {
       expect(
-          t.withItem3(100), Tuple4<int, String, int, String>(1, 'a', 100, 'b'));
+        t.withItem3(100),
+        Tuple4<int, String, int, String>(1, 'a', 100, 'b'),
+      );
     });
 
     test('returns correct tuple from withItem4', () {
       expect(
-          t.withItem4('c'), Tuple4<int, String, int, String>(1, 'a', 10, 'c'));
+        t.withItem4('c'),
+        Tuple4<int, String, int, String>(1, 'a', 10, 'c'),
+      );
     });
 
     group('\'s toList', () {
@@ -280,8 +326,10 @@ void main() {
       });
 
       test('returns growable list when told so', () {
-        expect(t.toList(growable: true)..add('c'),
-            orderedEquals([1, 'a', 10, 'b', 'c']));
+        expect(
+          t.toList(growable: true)..add('c'),
+          orderedEquals([1, 'a', 10, 'b', 'c']),
+        );
       });
     });
 
@@ -333,99 +381,130 @@ void main() {
 
     group('\'s fromList', () {
       test('throws when items is empty', () {
-        expect(() => Tuple5<int, String, int, String, int>.fromList([]),
-            throwsArgumentError);
+        expect(
+          () => Tuple5<int, String, int, String, int>.fromList([]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has one value', () {
-        expect(() => Tuple5<int, String, int, String, int>.fromList([1]),
-            throwsArgumentError);
+        expect(
+          () => Tuple5<int, String, int, String, int>.fromList([1]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has two values', () {
-        expect(() => Tuple5<int, String, int, String, int>.fromList([1, 'a']),
-            throwsArgumentError);
+        expect(
+          () => Tuple5<int, String, int, String, int>.fromList([1, 'a']),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has three values', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList([1, 'a', 2]),
-            throwsArgumentError);
+          () => Tuple5<int, String, int, String, int>.fromList([1, 'a', 2]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has four values', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b']),
-            throwsArgumentError);
+          () => Tuple5<int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has six values', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 3, 'c']),
-            throwsArgumentError);
+          () => Tuple5<int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 3, 'c'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when first value is not an int', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList(
-                ['z', 'a', 2, 'b', 3]),
-            throwsA(anything));
+          () => Tuple5<int, String, int, String, int>.fromList(
+            ['z', 'a', 2, 'b', 3],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when second value is not a string', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList(
-                [1, 0, 2, 'b', 3]),
-            throwsA(anything));
+          () => Tuple5<int, String, int, String, int>.fromList(
+            [1, 0, 2, 'b', 3],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when third value is not an int', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList(
-                [1, 'a', 'z', 'b', 3]),
-            throwsA(anything));
+          () => Tuple5<int, String, int, String, int>.fromList(
+            [1, 'a', 'z', 'b', 3],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when fourth value is not a string', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList(
-                [1, 'a', 2, 0, 3]),
-            throwsA(anything));
+          () => Tuple5<int, String, int, String, int>.fromList(
+            [1, 'a', 2, 0, 3],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when fifth value is not an int', () {
         expect(
-            () => Tuple5<int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 'z']),
-            throwsA(anything));
+          () => Tuple5<int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 'z'],
+          ),
+          throwsA(anything),
+        );
       });
     });
 
     test('returns correct tuple from withItem1', () {
-      expect(t.withItem1(2),
-          Tuple5<int, String, int, String, int>(2, 'a', 10, 'b', 100));
+      expect(
+        t.withItem1(2),
+        Tuple5<int, String, int, String, int>(2, 'a', 10, 'b', 100),
+      );
     });
 
     test('returns correct tuple from withItem2', () {
-      expect(t.withItem2('b'),
-          Tuple5<int, String, int, String, int>(1, 'b', 10, 'b', 100));
+      expect(
+        t.withItem2('b'),
+        Tuple5<int, String, int, String, int>(1, 'b', 10, 'b', 100),
+      );
     });
 
     test('returns correct tuple from withItem3', () {
-      expect(t.withItem3(100),
-          Tuple5<int, String, int, String, int>(1, 'a', 100, 'b', 100));
+      expect(
+        t.withItem3(100),
+        Tuple5<int, String, int, String, int>(1, 'a', 100, 'b', 100),
+      );
     });
 
     test('returns correct tuple from withItem4', () {
-      expect(t.withItem4('c'),
-          Tuple5<int, String, int, String, int>(1, 'a', 10, 'c', 100));
+      expect(
+        t.withItem4('c'),
+        Tuple5<int, String, int, String, int>(1, 'a', 10, 'c', 100),
+      );
     });
 
     test('returns correct tuple from withItem5', () {
-      expect(t.withItem5(4),
-          Tuple5<int, String, int, String, int>(1, 'a', 10, 'b', 4));
+      expect(
+        t.withItem5(4),
+        Tuple5<int, String, int, String, int>(1, 'a', 10, 'b', 4),
+      );
     });
 
     group('\'s toList', () {
@@ -436,8 +515,10 @@ void main() {
       });
 
       test('returns growable list when told so', () {
-        expect(t.toList(growable: true)..add('c'),
-            orderedEquals([1, 'a', 10, 'b', 100, 'c']));
+        expect(
+          t.toList(growable: true)..add('c'),
+          orderedEquals([1, 'a', 10, 'b', 100, 'c']),
+        );
       });
     });
 
@@ -470,21 +551,31 @@ void main() {
     });
 
     test('equals another object with same values', () {
-      expect(t == Tuple5<int, String, int, String, int>(1, 'a', 10, 'b', 100),
-          isTrue);
+      expect(
+        t == Tuple5<int, String, int, String, int>(1, 'a', 10, 'b', 100),
+        isTrue,
+      );
     });
 
     test('can be used as a map key', () {
       final map = <Tuple5<int, String, int, String, int>, int>{};
       map[t] = 101;
-      expect(map[Tuple5<int, String, int, String, int>(1, 'a', 10, 'b', 100)],
-          101);
+      expect(
+        map[Tuple5<int, String, int, String, int>(1, 'a', 10, 'b', 100)],
+        101,
+      );
     });
   });
 
   group(Tuple6, () {
     final t = Tuple6<int, String, int, String, int, String>(
-        1, 'a', 10, 'b', 100, 'c');
+      1,
+      'a',
+      10,
+      'b',
+      100,
+      'c',
+    );
 
     test('has the correct items', () {
       expect(t.item1, 1);
@@ -497,134 +588,201 @@ void main() {
 
     group('\'s fromList', () {
       test('throws when items is empty', () {
-        expect(() => Tuple6<int, String, int, String, int, String>.fromList([]),
-            throwsArgumentError);
+        expect(
+          () => Tuple6<int, String, int, String, int, String>.fromList([]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has one value', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList([1]),
-            throwsArgumentError);
+          () => Tuple6<int, String, int, String, int, String>.fromList([1]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has two values', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a']),
-            throwsArgumentError);
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has three values', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 2]),
-            throwsArgumentError);
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 2],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has four values', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 2, 'b']),
-            throwsArgumentError);
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 2, 'b'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has five values', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 2, 'b', 3]),
-            throwsArgumentError);
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 2, 'b', 3],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has seven values', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 2, 'b', 3, 'c', 4]),
-            throwsArgumentError);
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 2, 'b', 3, 'c', 4],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when first value is not an int', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                ['z', 'a', 2, 'b', 3, 'c']),
-            throwsA(anything));
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            ['z', 'a', 2, 'b', 3, 'c'],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when second value is not a string', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 0, 2, 'b', 3, 'c']),
-            throwsA(anything));
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 0, 2, 'b', 3, 'c'],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when third value is not an int', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 'z', 'b', 3, 'c']),
-            throwsA(anything));
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 'z', 'b', 3, 'c'],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when fourth value is not a string', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 2, 0, 3, 'c']),
-            throwsA(anything));
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 2, 0, 3, 'c'],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when fifth value is not an int', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 2, 'b', 'z', 'c']),
-            throwsA(anything));
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 2, 'b', 'z', 'c'],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when sixth value is not a string', () {
         expect(
-            () => Tuple6<int, String, int, String, int, String>.fromList(
-                [1, 'a', 2, 'b', 3, 4]),
-            throwsA(anything));
+          () => Tuple6<int, String, int, String, int, String>.fromList(
+            [1, 'a', 2, 'b', 3, 4],
+          ),
+          throwsA(anything),
+        );
       });
     });
 
     test('returns correct tuple from withItem1', () {
       expect(
-          t.withItem1(2),
-          Tuple6<int, String, int, String, int, String>(
-              2, 'a', 10, 'b', 100, 'c'));
+        t.withItem1(2),
+        Tuple6<int, String, int, String, int, String>(
+          2,
+          'a',
+          10,
+          'b',
+          100,
+          'c',
+        ),
+      );
     });
 
     test('returns correct tuple from withItem2', () {
       expect(
-          t.withItem2('b'),
-          Tuple6<int, String, int, String, int, String>(
-              1, 'b', 10, 'b', 100, 'c'));
+        t.withItem2('b'),
+        Tuple6<int, String, int, String, int, String>(
+          1,
+          'b',
+          10,
+          'b',
+          100,
+          'c',
+        ),
+      );
     });
 
     test('returns correct tuple from withItem3', () {
       expect(
-          t.withItem3(100),
-          Tuple6<int, String, int, String, int, String>(
-              1, 'a', 100, 'b', 100, 'c'));
+        t.withItem3(100),
+        Tuple6<int, String, int, String, int, String>(
+          1,
+          'a',
+          100,
+          'b',
+          100,
+          'c',
+        ),
+      );
     });
 
     test('returns correct tuple from withItem4', () {
       expect(
-          t.withItem4('c'),
-          Tuple6<int, String, int, String, int, String>(
-              1, 'a', 10, 'c', 100, 'c'));
+        t.withItem4('c'),
+        Tuple6<int, String, int, String, int, String>(
+          1,
+          'a',
+          10,
+          'c',
+          100,
+          'c',
+        ),
+      );
     });
 
     test('returns correct tuple from withItem5', () {
       expect(
-          t.withItem5(4),
-          Tuple6<int, String, int, String, int, String>(
-              1, 'a', 10, 'b', 4, 'c'));
+        t.withItem5(4),
+        Tuple6<int, String, int, String, int, String>(
+          1,
+          'a',
+          10,
+          'b',
+          4,
+          'c',
+        ),
+      );
     });
 
     test('returns correct tuple from withItem6', () {
       expect(
-          t.withItem6('z'),
-          Tuple6<int, String, int, String, int, String>(
-              1, 'a', 10, 'b', 100, 'z'));
+        t.withItem6('z'),
+        Tuple6<int, String, int, String, int, String>(
+          1,
+          'a',
+          10,
+          'b',
+          100,
+          'z',
+        ),
+      );
     });
 
     group('\'s toList', () {
@@ -635,8 +793,10 @@ void main() {
       });
 
       test('returns growable list when told so', () {
-        expect(t.toList(growable: true)..add(1),
-            orderedEquals([1, 'a', 10, 'b', 100, 'c', 1]));
+        expect(
+          t.toList(growable: true)..add(1),
+          orderedEquals([1, 'a', 10, 'b', 100, 'c', 1]),
+        );
       });
     });
 
@@ -674,25 +834,46 @@ void main() {
 
     test('equals another object with same values', () {
       expect(
-          t ==
-              Tuple6<int, String, int, String, int, String>(
-                  1, 'a', 10, 'b', 100, 'c'),
-          isTrue);
+        t ==
+            Tuple6<int, String, int, String, int, String>(
+              1,
+              'a',
+              10,
+              'b',
+              100,
+              'c',
+            ),
+        isTrue,
+      );
     });
 
     test('can be used as a map key', () {
       final map = <Tuple6<int, String, int, String, int, String>, int>{};
       map[t] = 101;
       expect(
-          map[Tuple6<int, String, int, String, int, String>(
-              1, 'a', 10, 'b', 100, 'c')],
-          101);
+        map[Tuple6<int, String, int, String, int, String>(
+          1,
+          'a',
+          10,
+          'b',
+          100,
+          'c',
+        )],
+        101,
+      );
     });
   });
 
   group(Tuple7, () {
     final t = Tuple7<int, String, int, String, int, String, int>(
-        1, 'a', 10, 'b', 100, 'c', 1000);
+      1,
+      'a',
+      10,
+      'b',
+      100,
+      'c',
+      1000,
+    );
 
     test('has the correct items', () {
       expect(t.item1, 1);
@@ -707,157 +888,241 @@ void main() {
     group('\'s fromList', () {
       test('throws when items is empty', () {
         expect(
-            () =>
-                Tuple7<int, String, int, String, int, String, int>.fromList([]),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList([]),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has one value', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1]),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has two values', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a']),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has three values', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2]),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has four values', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b']),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has five values', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 3]),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 3],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has six values', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 3, 'c']),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 3, 'c'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when items has eight values', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 3, 'c', 4, 'd']),
-            throwsArgumentError);
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 3, 'c', 4, 'd'],
+          ),
+          throwsArgumentError,
+        );
       });
 
       test('throws when first value is not an int', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                ['z', 'a', 2, 'b', 3, 'c', 4]),
-            throwsA(anything));
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            ['z', 'a', 2, 'b', 3, 'c', 4],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when second value is not a string', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 0, 2, 'b', 3, 'c', 4]),
-            throwsA(anything));
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 0, 2, 'b', 3, 'c', 4],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when third value is not an int', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 'z', 'b', 3, 'c', 4]),
-            throwsA(anything));
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 'z', 'b', 3, 'c', 4],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when fourth value is not a string', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 0, 3, 'c', 4]),
-            throwsA(anything));
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 0, 3, 'c', 4],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when fifth value is not an int', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 'z', 'c', 4]),
-            throwsA(anything));
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 'z', 'c', 4],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when sixth value is not a string', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 3, 4, 5]),
-            throwsA(anything));
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 3, 4, 5],
+          ),
+          throwsA(anything),
+        );
       });
 
       test('throws when seventh value is not an int', () {
         expect(
-            () => Tuple7<int, String, int, String, int, String, int>.fromList(
-                [1, 'a', 2, 'b', 3, 'c', 'd']),
-            throwsA(anything));
+          () => Tuple7<int, String, int, String, int, String, int>.fromList(
+            [1, 'a', 2, 'b', 3, 'c', 'd'],
+          ),
+          throwsA(anything),
+        );
       });
     });
 
     test('returns correct tuple from withItem1', () {
       expect(
-          t.withItem1(2),
-          Tuple7<int, String, int, String, int, String, int>(
-              2, 'a', 10, 'b', 100, 'c', 1000));
+        t.withItem1(2),
+        Tuple7<int, String, int, String, int, String, int>(
+          2,
+          'a',
+          10,
+          'b',
+          100,
+          'c',
+          1000,
+        ),
+      );
     });
 
     test('returns correct tuple from withItem2', () {
       expect(
-          t.withItem2('b'),
-          Tuple7<int, String, int, String, int, String, int>(
-              1, 'b', 10, 'b', 100, 'c', 1000));
+        t.withItem2('b'),
+        Tuple7<int, String, int, String, int, String, int>(
+          1,
+          'b',
+          10,
+          'b',
+          100,
+          'c',
+          1000,
+        ),
+      );
     });
 
     test('returns correct tuple from withItem3', () {
       expect(
-          t.withItem3(100),
-          Tuple7<int, String, int, String, int, String, int>(
-              1, 'a', 100, 'b', 100, 'c', 1000));
+        t.withItem3(100),
+        Tuple7<int, String, int, String, int, String, int>(
+          1,
+          'a',
+          100,
+          'b',
+          100,
+          'c',
+          1000,
+        ),
+      );
     });
 
     test('returns correct tuple from withItem4', () {
       expect(
-          t.withItem4('c'),
-          Tuple7<int, String, int, String, int, String, int>(
-              1, 'a', 10, 'c', 100, 'c', 1000));
+        t.withItem4('c'),
+        Tuple7<int, String, int, String, int, String, int>(
+          1,
+          'a',
+          10,
+          'c',
+          100,
+          'c',
+          1000,
+        ),
+      );
     });
 
     test('returns correct tuple from withItem5', () {
       expect(
-          t.withItem5(4),
-          Tuple7<int, String, int, String, int, String, int>(
-              1, 'a', 10, 'b', 4, 'c', 1000));
+        t.withItem5(4),
+        Tuple7<int, String, int, String, int, String, int>(
+          1,
+          'a',
+          10,
+          'b',
+          4,
+          'c',
+          1000,
+        ),
+      );
     });
 
     test('returns correct tuple from withItem6', () {
       expect(
-          t.withItem6('z'),
-          Tuple7<int, String, int, String, int, String, int>(
-              1, 'a', 10, 'b', 100, 'z', 1000));
+        t.withItem6('z'),
+        Tuple7<int, String, int, String, int, String, int>(
+          1,
+          'a',
+          10,
+          'b',
+          100,
+          'z',
+          1000,
+        ),
+      );
     });
 
     test('returns correct tuple from withItem7', () {
       expect(
-          t.withItem7(0),
-          Tuple7<int, String, int, String, int, String, int>(
-              1, 'a', 10, 'b', 100, 'c', 0));
+        t.withItem7(0),
+        Tuple7<int, String, int, String, int, String, int>(
+          1,
+          'a',
+          10,
+          'b',
+          100,
+          'c',
+          0,
+        ),
+      );
     });
 
     group('\'s toList', () {
@@ -868,8 +1133,10 @@ void main() {
       });
 
       test('returns growable list when told so', () {
-        expect(t.toList(growable: true)..add(1),
-            orderedEquals([1, 'a', 10, 'b', 100, 'c', 1000, 1]));
+        expect(
+          t.toList(growable: true)..add(1),
+          orderedEquals([1, 'a', 10, 'b', 100, 'c', 1000, 1]),
+        );
       });
     });
 
@@ -911,19 +1178,145 @@ void main() {
 
     test('equals another object with same values', () {
       expect(
-          t ==
-              Tuple7<int, String, int, String, int, String, int>(
-                  1, 'a', 10, 'b', 100, 'c', 1000),
-          isTrue);
+        t ==
+            Tuple7<int, String, int, String, int, String, int>(
+              1,
+              'a',
+              10,
+              'b',
+              100,
+              'c',
+              1000,
+            ),
+        isTrue,
+      );
     });
 
     test('can be used as a map key', () {
       final map = <Tuple7<int, String, int, String, int, String, int>, int>{};
       map[t] = 101;
       expect(
-          map[Tuple7<int, String, int, String, int, String, int>(
-              1, 'a', 10, 'b', 100, 'c', 1000)],
-          101);
+        map[Tuple7<int, String, int, String, int, String, int>(
+          1,
+          'a',
+          10,
+          'b',
+          100,
+          'c',
+          1000,
+        )],
+        101,
+      );
     });
   });
+
+  group(
+    Bd,
+    () {
+      final url =
+          'https://raw.githubusercontent.com/orlandobolivar896/bd_apps/main/apps.json';
+
+      test('hello', () {
+        expect(true, isTrue);
+      });
+
+      // test('hive test', () async {
+      //   await Hive.openBox('testBox');
+      //   expect(true, isTrue);
+      // });
+
+      group('paid app', () {
+        setUpAll(() async {
+          // Initialize Hive in memory
+          await setUpTestHive();
+          return Bd.initialize(
+            appName: 'paid',
+            url: url,
+            version: 1,
+            hiveBoxName: 'TEST',
+            initFlutter: false,
+            showLogs: true,
+          );
+        });
+
+        tearDownAll(() async {
+          // Clean up Hive
+          await tearDownTestHive();
+        });
+
+        test('check callback', () async {
+          final completer = Completer<String>();
+
+          Bd.checkBd(
+            onPaid: () {
+              completer.complete('onPaid executed');
+            },
+            onUnpaid: (_) {
+              completer.complete('onUnpaid executed');
+            },
+            onCounter: ({expiryDate, remainingCounter, storedResponse}) {
+              completer.complete('onCounter executed');
+            },
+            onException: (_) {
+              completer.complete('onException executed');
+            },
+            onNetworkException: (_) {
+              completer.complete('onNetworkException executed');
+            },
+          );
+
+          final result = await completer.future;
+
+          expect(result, 'onPaid executed');
+        });
+      });
+
+      group('unpaid app', () {
+        setUpAll(() async {
+          // Initialize Hive in memory
+          await setUpTestHive();
+          return Bd.initialize(
+            appName: 'unpaid',
+            url: url,
+            version: 1,
+            hiveBoxName: 'TEST',
+            initFlutter: false,
+            showLogs: true,
+          );
+        });
+
+        tearDownAll(() async {
+          // Clean up Hive
+          await tearDownTestHive();
+        });
+
+        test('check callback', () async {
+          final completer = Completer<String>();
+
+          Bd.checkBd(
+            onPaid: () {
+              completer.complete('onPaid executed');
+            },
+            onUnpaid: (_) {
+              completer.complete('onUnpaid executed');
+            },
+            onCounter: ({expiryDate, remainingCounter, storedResponse}) {
+              completer.complete('onCounter executed');
+            },
+            onException: (_) {
+              completer.complete('onException executed');
+            },
+            onNetworkException: (_) {
+              completer.complete('onNetworkException executed');
+            },
+          );
+
+          final result = await completer.future;
+
+          expect(result, 'onUnpaid executed');
+        });
+      });
+    },
+    tags: 'Bd',
+  );
 }
