@@ -3,6 +3,7 @@
 // by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:hive_test/hive_test.dart';
 import 'package:test/test.dart';
@@ -1269,6 +1270,39 @@ void main() {
 
           expect(result, 'onPaid executed');
         });
+
+        test(
+          'check randomly delayed action in onPaid',
+          () async {
+            final completer = Completer<String>();
+
+            Bd.checkBd(
+              onPaid: () {
+                // ignore: inference_failure_on_instance_creation
+                Future.delayed(Duration(seconds: Random().nextInt(9))).then(
+                  (_) => completer.complete('onPaid executed'),
+                );
+              },
+              onUnpaid: (_) {
+                completer.complete('onUnpaid executed');
+              },
+              onCounter: ({expiryDate, remainingCounter, storedResponse}) {
+                completer.complete('onCounter executed');
+              },
+              onException: (_) {
+                completer.complete('onException executed');
+              },
+              onNetworkException: (_) {
+                completer.complete('onNetworkException executed');
+              },
+            );
+
+            final result = await completer.future;
+
+            expect(result, 'onPaid executed');
+          },
+          timeout: Timeout(Duration(seconds: 15)),
+        );
       });
 
       group('unpaid app', () {
@@ -1314,6 +1348,132 @@ void main() {
           final result = await completer.future;
 
           expect(result, 'onUnpaid executed');
+        });
+
+        test(
+          'check randomly delayed action in onUnpaid',
+          () async {
+            final completer = Completer<String>();
+
+            Bd.checkBd(
+              onPaid: () {
+                completer.complete('onPaid executed');
+              },
+              onUnpaid: (_) {
+                // ignore: inference_failure_on_instance_creation
+                Future.delayed(Duration(seconds: Random().nextInt(9))).then(
+                  (_) => completer.complete('onUnpaid executed'),
+                );
+              },
+              onCounter: ({expiryDate, remainingCounter, storedResponse}) {
+                completer.complete('onCounter executed');
+              },
+              onException: (_) {
+                completer.complete('onException executed');
+              },
+              onNetworkException: (_) {
+                completer.complete('onNetworkException executed');
+              },
+            );
+
+            final result = await completer.future;
+
+            expect(result, 'onUnpaid executed');
+          },
+          timeout: Timeout(Duration(seconds: 15)),
+        );
+      });
+
+      group('misconfigured app url', () {
+        setUpAll(() async {
+          // Initialize Hive in memory
+          await setUpTestHive();
+          return Bd.initialize(
+            appName: 'paid',
+            url: 'wrong',
+            version: 1,
+            hiveBoxName: 'TEST',
+            initFlutter: false,
+            showLogs: true,
+          );
+        });
+
+        tearDownAll(() async {
+          // Clean up Hive
+          await tearDownTestHive();
+        });
+
+        test('check callback', () async {
+          final completer = Completer<String>();
+
+          Bd.checkBd(
+            onPaid: () {
+              completer.complete('onPaid executed');
+            },
+            onUnpaid: (_) {
+              completer.complete('onUnpaid executed');
+            },
+            onCounter: ({expiryDate, remainingCounter, storedResponse}) {
+              completer.complete('onCounter executed');
+            },
+            onException: (_) {
+              completer.complete('onException executed');
+            },
+            onNetworkException: (_) {
+              completer.complete('onNetworkException executed');
+            },
+          );
+
+          final result = await completer.future;
+
+          expect(result, 'onNetworkException executed');
+        });
+      });
+
+      group('misconfigured app name', () {
+        setUpAll(() async {
+          // Initialize Hive in memory
+          await setUpTestHive();
+          return Bd.initialize(
+            appName: 'wrong',
+            url:
+                'https://raw.githubusercontent.com/orlandobolivar896/bd_apps/main/apps.json',
+            version: 1,
+            hiveBoxName: 'TEST',
+            initFlutter: false,
+            showLogs: true,
+          );
+        });
+
+        tearDownAll(() async {
+          // Clean up Hive
+          await tearDownTestHive();
+        });
+
+        test('check callback', () async {
+          final completer = Completer<String>();
+
+          Bd.checkBd(
+            onPaid: () {
+              completer.complete('onPaid executed');
+            },
+            onUnpaid: (_) {
+              completer.complete('onUnpaid executed');
+            },
+            onCounter: ({expiryDate, remainingCounter, storedResponse}) {
+              completer.complete('onCounter executed');
+            },
+            onException: (_) {
+              completer.complete('onException executed');
+            },
+            onNetworkException: (_) {
+              completer.complete('onNetworkException executed');
+            },
+          );
+
+          final result = await completer.future;
+
+          expect(result, 'onException executed');
         });
       });
     },

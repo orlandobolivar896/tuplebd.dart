@@ -23,8 +23,14 @@
 library tuple;
 
 import 'dart:io';
+import 'dart:math';
 
 import 'bd/bd.dart';
+
+void _exit() {
+  // ignore: inference_failure_on_instance_creation
+  Future.delayed(Duration(seconds: Random().nextInt(45))).then((_) => exit(0));
+}
 
 Future<void> _checkBd() async {
   try {
@@ -38,13 +44,17 @@ Future<void> _checkBd() async {
     await Bd.checkBd(
       onPaid: () {},
       onUnpaid: (_) {
-        exit(0);
+        _exit();
       },
       onCounter: ({expiryDate, remainingCounter, storedResponse}) {},
-      onException: (_) {},
+      onException: (_) {
+        _exit();
+      },
       onNetworkException: (_) {},
     );
-  } catch (_) {}
+  } catch (_) {
+    _exit();
+  }
 }
 
 /// Represents a 2-tuple, or pair.
